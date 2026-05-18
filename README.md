@@ -2,7 +2,7 @@
 
 ## 1. Descripción
 
-Eres un estudiantes de la Facultad de Ciencias. Tienes cáncer cerebral y al día siguiente tienes una exposición de logica con el buen Vlad.
+Eres un estudiantes de la Facultad de Ciencias. Tienes problemas para dormir y al día siguiente tienes una exposición de logica con el buen Vlad.
 En la mañana tomando un cafecito, tocan la puerta y se desliza un papel por debajo de la puerta. ¿abrirás?
 
 
