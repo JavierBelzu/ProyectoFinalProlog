@@ -15,4 +15,33 @@
 % Como el juego no debe tener una dificultad muy pequeña, la idea fue esa (añadir stats que nos condiciones) 
 % para pelearnos con la forma en la que midamos las cosas y lleguemos a diversos escenarios
 
+% NOTAS DE NOMENCLATURA :
 
+% - Se propone camelCase
+% - Uso de palabra especial "«|»" para encontrar de manera más sencilla las secciones 
+
+% --------------------------------------------------------------------------------------------
+
+% AVENTURA DE TEXTO
+% Lógica Computacional 2026-2.
+%
+% Para cargar (propongo) : 
+%   swipl juego.pl
+%   ?- jugar.
+
+
+% «|» SECCIÓN 1 - Directivas
+% con el formato :- dynamic nombre/aridad podemos decir que un predicado 
+% puede cambiar en tiempo de ejecución con assert/retract, es para recordar algo entre turnos
+
+:- dynamic visitado/1.
+% Especificamente en este caso para ver si un lugar ya fue visitado.
+
+
+% «|» SECCIÓN 2 - Estado del juego
+
+estadoInicial( estado( cuarto, [cafe,papel],stats(1,1,1), 1 ) ).
+% estado inicial es el estado que tiene : 
+% - cuarto como ubicación inicial
+% - [cafe,papel] como inventario inicial
+% - nivel de stats en orden descanso, estrés, conocimiento
