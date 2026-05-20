@@ -165,8 +165,72 @@ accion(estado(pasillo, Inv, Stats, T), salirCalle,
 
 accion(estado(pasillo, Inv, stats(S, E, C), T), hablarConRodrigo,
        estado(pasillo, [rodrigo_hablo | Inv], stats(S, E1, C), T1)) :-
-    \+ member(rodrigoHablo, Inv),
+    \+ miembro(rodrigoHablo, Inv),
     E1 is min(3, E + 1),
     T1 is T + 1,
     write('"Se dice que Vlad canceló..." Rodrigo se va antes de que preguntes.'), nl,
     write('[+Estrés]'), nl.
+
+
+
+% «|» SECCIÓN 6 - condiciones fin juego
+% Detectar el final y enseñar qué final mostrar
+% fin_juego/2 recibe el estado actual y devuelve el nombre del final que corresponde.
+% El orden sí IMPORTA
+% Usamos ! al final para decirle q ya no siga buscando
+
+
+% final secreto
+finJuego(estado(fin, Inv, stats(_, E, C), _), final_secreto) :-
+    miembro(pista_papel, Inv),
+    miembro(pista_conserje, Inv),
+    memmiembrober(pista_lab, Inv),
+    miembro(usb, Inv),
+    C >= 2, E < 3, !,
+    nl,
+    write('=== FINAL SECRETO: La conspiración de Vlad ==='), nl,
+    write('Antes de empezar, miras a Vlad. "¿Fuiste tú?"'), nl,
+    write('Vlad asiente lentamente. "El que no duerme merece llegar con todo."'), nl.
+
+% Final A — buenas condiciones generales
+finJuego(estado(fin, Inv, stats(_, E, C), T), final_a) :-
+    miembro(usb, Inv), C >= 3, E < 3, T =< 20, !,
+    nl,
+    write('=== FINAL A: Al fin descasas ==='), nl,
+    write('"Bien hecho." — Vlad cierra su libreta. Al fin puedes dormir.'), nl.
+
+% Final C — mal estado
+finJuego(estado(fin, _, stats(_, 3, C), _), final_c) :-
+    C < 2, !,
+    nl,
+    write('=== FINAL C: ._. ==='), nl,
+    write('Abres la boca. Nada. Vlad escribe algo en su libreta.'), nl.
+
+% Final D — sin sueño
+finJuego(estado(fin, _, stats(0, _, _), _), final_d) :-
+    !,
+    nl,
+    write('=== FINAL D: Zzzzz ==='), nl,
+    write('Te quedas dormido antes de exponer. Vlad se fue hace una hora.'), nl.
+
+% Final por defecto — siempre tiene éxito, atrapa todo lo demás
+finJuego(estado(fin, _, _, _), final_default) :-
+    nl,
+    write('=== FIN ==='), nl,
+    write('Sobreviviste. Casi no, pero lo hiciste. ¿O sólo fue un sueño?'), nl.
+
+
+% «|» SECCIÓN 7 - colapso inesperado
+% condiciones que pueden terminar el juego antes
+% colapso/1 revisa el estado después de CADA acción.
+% En ciclo/1 se llama antes de continuar
+
+colapso(estado(Ubi, _, stats(0, _, _), _)) :-
+    miembro(Ubi, [calle, entradaFacultad, labComputo, cafeteria]),
+    nl,
+    write('*** Tus ojos se cierran solos en '), write(Ubi), write('. ***'), nl,
+    write('Te quedas dormido. La expo termina sin ti.'), nl.
+
+
+
+% «|» SECCIÓN 8 - ciclo principal del juego
