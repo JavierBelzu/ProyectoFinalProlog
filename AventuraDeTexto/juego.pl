@@ -76,7 +76,7 @@ estadoInicial( estado( cuarto, [cafe,papel],stats(1,1,1), 1 ) ).
 
 %---- Descripcion de el Cuarto ----
 describir(estado(cuarto,Inv,_,_)) :-
-    nl, write('--- LOCALCIÓN : Tu cuarto, 7:00am ---'), nl,
+    nl, write('--- LOCACIÓN: Tu cuarto, 7:00am ---'), nl,
     write('Llevas dos días sin dormir por el proyecto que presentarás. Tienes dolor de estómago por algo que te vendieron en islas.'), nl,
     (
         miembro(papel, Inv) -> 
@@ -252,6 +252,21 @@ accion(estado(cuarto, Inv, stats(S, E, C), T), tomarCafe,
     T1 is T + 1,
     write('El café te activa. Te tiembla un poco la mano.'), nl,
     write('[+Sueño] [+Estrés]'), nl.
+
+accion(estado(cuarto, Inv, stats(S, E, C), T), intentarDormir, estado(cuarto, Inv, stats(S1, E1, C), T1)) :-
+    % dormir te da dos puntos de sueño y te baja el estrés, pero solo lo puedes hcaer una vez
+    asserta(visitado(durmio)),  %Checamos si ya durmió
+    S1 is min(3, S + 2),
+    E1 is max(0, E - 1),
+    T1 is T + 1,
+    write('Cierras los ojos un momento y te quedas dormido. Al despertar te sientes un poco mejor.'), nl, write('[+ Sueño] [- Estrés]'), nl.
+
+accion(estado(cuarto, Inv, stats(S, E, C), T), revisarMochila, estado(cuarto, [mochilaRevisada | Inv], stats(S, E1, C1), T1)) :-
+    % AL revisar la mochila bajas estrés y subes conocimiento, no te quita stats
+    E1 is max(0, E - 1),
+    C1 is min(3, C + 1),
+    T1 is T + 1,
+    write('Encuentras unos apuntes que habias perdido y los repasas rápido. Esto te relaja un poco.'), nl, write('[- Estrés] [+ Conocimiento]'), nl.
 
 % --- PASILLO ---
 
