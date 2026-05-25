@@ -194,12 +194,12 @@ accionesValidas(estado(pasillo, Inv, _, _), Acciones) :-
 accionDisponiblePasillo(_, salirCalle).
 
 %Hablar con rodrigo
-accionDisponiblePasillo(Inv,_,hablarConRodrigo) :-
+accionDisponiblePasillo(Inv,hablarConRodrigo) :-
     \+ miembro(rodrigoHablo, Inv).
 
 %Revisar las puertas de los vecinos
-accionDisponiblePasillo(Inv,_,examinarPuertas) :- 
-    \+ miembro(papelesVecinos, Inv).
+accionDisponiblePasillo(Inv,examinarPuertas) :- 
+    \+ miembro(papelesVecinos,Inv).
 
 %Acciones disponibles desde la Calle
 accionesValidas(estado(calle,Inv,_,_), Acciones) :-
