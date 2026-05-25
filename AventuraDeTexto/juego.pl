@@ -74,6 +74,7 @@ estadoInicial( estado( cuarto, [cafe,papel],stats(1,1,1), 1 ) ).
 % secciones para poder poner las descripciones (texto a mostrar)
 % describir/1 tendrá el estado completo para que pueda cambiar el texto segun inventario o stats
 
+%---- Descripcion de el Cuarto ----
 describir(estado(cuarto,Inv,_,_)) :-
     nl, write('--- LOCALCIÓN : Tu cuarto, 7:00am ---'), nl,
     write('Llevas dos días sin dormir por el proyecto que presentarás. Tienes dolor de estómago por algo que te vendieron en islas.'), nl,
@@ -149,7 +150,13 @@ accionDisponibleCuarto(Inv, _, buscarUsb) :-
 accionDisponibleCuarto(Inv, E, tomarCafe) :-
     miembro(cafe, Inv), E < 3.
 
-% # FALTAN
+% revisar la mochila
+accionDisponibleCuarto(Inv, _, revisarMochila) :- 
+    \+ miembro(mochilaRevisada, Inv).
+
+% Intento de dormir, solo tiene exito si tienes el sueño bajo
+accionDisponibleCuarto(_, stats(S, _, _), intentarDormir) :- 
+    S < 2, \+ visitado(durmio).
 
 % Acciones desde el pasillo
 accionesValidas(estado(pasillo, Inv, _, _), Acciones) :-
