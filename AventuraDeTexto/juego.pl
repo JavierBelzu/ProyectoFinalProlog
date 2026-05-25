@@ -169,13 +169,20 @@ accionDisponibleCuarto(Inv, _, revisarMochila) :-
 accionDisponibleCuarto(_, stats(S, _, _), intentarDormir) :- 
     S < 2, \+ visitado(durmio).
 
-% Acciones desde el pasillo
+% Acciones desde el Pasillo
 accionesValidas(estado(pasillo, Inv, _, _), Acciones) :-
     findall(A, accionDisponiblePasillo(Inv, A), Acciones).
 
+%Salir a la calle
 accionDisponiblePasillo(_, salirCalle).
-accionDisponiblePasillo(Inv, hablarConRodrigo) :-
+
+%Hablar con rodrigo
+accionDisponiblePasillo(Inv,_,hablarConRodrigo) :-
     \+ miembro(rodrigoHablo, Inv).
+
+%Revisar las puertas de los vecinos
+accionDisponiblePasillo(Inv,_,examinarPuertas) :- 
+    \+ miembro(papelesVecinos, Inv).
 
 % Acciones entradaFacultad 
 accionesValidas(estado(entradaFacultad, Inv, _, _), Acciones) :-
