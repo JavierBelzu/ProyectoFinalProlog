@@ -271,7 +271,8 @@ accion(estado(cuarto, Inv, stats(S, E, C), T), tomarCafe,
     write('El café te activa. Te tiembla un poco la mano.'), nl,
     write('[+Sueño] [+Estrés]'), nl.
 
-accion(estado(cuarto, Inv, stats(S, E, C), T), intentarDormir, estado(cuarto, Inv, stats(S1, E1, C), T1)) :-
+accion(estado(cuarto, Inv, stats(S, E, C), T), intentarDormir, 
+       estado(cuarto, Inv, stats(S1, E1, C), T1)) :-
     % dormir te da dos puntos de sueño y te baja el estrés, pero solo lo puedes hcaer una vez
     asserta(visitado(durmio)),  %Checamos si ya durmió
     S1 is min(3, S + 2),
@@ -279,7 +280,8 @@ accion(estado(cuarto, Inv, stats(S, E, C), T), intentarDormir, estado(cuarto, In
     T1 is T + 1,
     write('Cierras los ojos un momento y te quedas dormido. Al despertar te sientes un poco mejor.'), nl, write('[+ Sueño] [- Estrés]'), nl.
 
-accion(estado(cuarto, Inv, stats(S, E, C), T), revisarMochila, estado(cuarto, [mochilaRevisada | Inv], stats(S, E1, C1), T1)) :-
+accion(estado(cuarto, Inv, stats(S, E, C), T), revisarMochila, 
+       estado(cuarto, [mochilaRevisada | Inv], stats(S, E1, C1), T1)) :-
     % AL revisar la mochila bajas estrés y subes conocimiento, no te quita stats
     E1 is max(0, E - 1),
     C1 is min(3, C + 1),
@@ -301,6 +303,14 @@ accion(estado(pasillo, Inv, stats(S, E, C), T), hablarConRodrigo,
     write('"Se dice que Vlad canceló..." Rodrigo se va antes de que preguntes.'), nl,
     write('[+Estrés]'), nl.
 
+accion(estado(pasillo, Inv, stats(S, E, C), T), examinarPuertas, 
+       estado(pasillo, [papelesVecinos | Inv], stats(S, E, C1), T1)) :-
+    % Examinar las puertas te sube conocimiento, solo se puede hacer una vez
+    C1 is min(3, C + 1),
+    T1 is T + 1,
+    write('Notas que bajo las otras puertas hay papeles idénticos al tuyo. Extraño.'), nl, write('[+ Conocimiento]'), nl.
+
+% --- CALLE ---
 
 
 % «|» SECCIÓN 6 - condiciones fin juego
