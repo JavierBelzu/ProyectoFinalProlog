@@ -93,6 +93,17 @@ describir(estado(cuarto,Inv,_,_)) :-
 %
 % Podemos hacer un cambio de texto dependiendo de (miembro(algo,Inv) -> write('Si sí está') ; write('Si no está'))
 
+%---- Descripcion de el Pasillo ----
+describir(estado(pasillo,Inv,_,_)) :-
+    nl, write('--- LOCACIÓN: El pasillo de tu edificio ---'), nl,
+    write('Está diferente. El ambiente es sombrío y notas algo raro con las puertas.'), nl,
+    (
+        \+ miembro(rodrigoHablo, Inv) ->  %Agregamos contexto sobre rodrigo
+            write('A lo lejos ves a tu vecino Rodrigo, tiene una cara de pánico.')
+        ; 
+            write('El pasillo está vacío ahora que Rodrigo bajó corriendo.')
+    ), nl.
+
 % ---Descripcion de entradaFacultad
 
 describir(estado(entradaFacultad, _, _, _)) :-
