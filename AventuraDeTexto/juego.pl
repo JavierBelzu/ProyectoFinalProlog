@@ -154,7 +154,7 @@ describir(estado(cafeteria, _, _, _)) :-
 % «|» SECCIÓN 4 - acciones disponibles
 % lista de acciones en las que se puede hacer desde cada ubicación.
 
-accionesValidas(estado(cuarto, Inv, stats(_, E, _), _), Acciones) :-
+accionesValidas(estado(cuarto, Inv, Stats, _), Acciones) :-
     findall(A, accionDisponibleCuarto(Inv, E, A), Acciones).
 % findall, para poder tener todas las opciones dispoinles, para no tener que hacerlo como siempre uno por uno
 
@@ -175,7 +175,7 @@ accionDisponibleCuarto(Inv, _, buscarUsb) :-
 % buscamosUSB si la usb no está en el inventario
 
 % sólo si el estrés (E de estrés) es menor a 3
-accionDisponibleCuarto(Inv, E, tomarCafe) :-
+accionDisponibleCuarto(Inv, stats(_, E, _), tomarCafe) :-
     miembro(cafe, Inv), E < 3.
 
 % revisar la mochila
