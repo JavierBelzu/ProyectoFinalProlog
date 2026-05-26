@@ -144,13 +144,17 @@ describir(estado(cafeteria, _, _, _)) :-
     nl, write('--- LOCACIÓN: Cafetería ---'), nl,
     write('Huele a café quemado. Tu equipo está en una mesa al fondo.'), nl.
 
-    
+describir(estado(entradaFacultad, _, _, _)) :-
+    nl, write('--- LOCACIÓN: Entrada de la Facultad ---'), nl,
+    write('Las puertas están abiertas. Puedes ir al lab, la biblioteca o la cafetería.'), nl.
 
 % «|» SECCIÓN 4 - acciones disponibles
 % lista de acciones en las que se puede hacer desde cada ubicación.
 
+
+
 accionesValidas(estado(cuarto, Inv, Stats, _), Acciones) :-
-    findall(A, accionDisponibleCuarto(Inv, E, A), Acciones).
+    findall(A, accionDisponibleCuarto(Inv, Stats, A), Acciones).
 % findall, para poder tener todas las opciones dispoinles, para no tener que hacerlo como siempre uno por uno
 
 % Siempre disponible en el cuarto
@@ -246,6 +250,13 @@ accionesValidas(estado(cafeteria, Inv, stats(_, E, _), _), Acciones) :-
 accionDisponibleCafeteria(_, salirDeCafeteria).
 accionDisponibleCafeteria(_, hablarConEquipo).
 accionDisponibleCafeteria(_, tomarCafeCafeteria).
+
+accionesValidas(estado(entradaFacultad, _, _, _), Acciones) :-
+    findall(A, accionDisponibleFacultad(A), Acciones).
+
+accionDisponibleFacultad(irALabComputo).
+accionDisponibleFacultad(irABiblioteca).
+accionDisponibleFacultad(irACafeteria).
 
 
 
@@ -443,10 +454,10 @@ accion(estado(cafeteria, Inv, Stats, T), salirDeCafeteria,
 
 
 % final secreto
-finJuego(estado(fin, Inv, stats(_, E, C), _), final_secreto) :-
-    miembro(pista_papel, Inv),
-    miembro(pista_conserje, Inv),
-    miembro(pista_lab, Inv),
+finJuego(estado(fin, Inv, stats(_, E, C), _), finalSecreto) :-
+    miembro(pistaPapel, Inv),
+    miembro(pistaConserje, Inv),
+    miembro(pistaLab, Inv),
     miembro(usb, Inv),
     C >= 2, E < 3, !,
     nl,
