@@ -325,7 +325,7 @@ accion(estado(cuarto, Inv, stats(S, E, C), T), leerPapel,
     C1 is min(3, C + 1),   % sube conocimiento
     T1 is T + 1,
     write('El papel dice: "Ve al lab de cómputo antes de las 8am."'), nl,
-    write('[+ Conocimiento]'), nl.
+    write('[+ Conocimiento] [Pista 1/3 obtenida]'), nl.
 
 accion(estado(cuarto, Inv, stats(S, E, C), T), buscarUsb,
        estado(cuarto, Inv, stats(S, E1, C), T1)) :-
