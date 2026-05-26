@@ -121,6 +121,7 @@ describir(estado(tienda,Inv,_,_)) :-
         write('Ya compraste tu café extra, te sientes como nuevo.')
     ), nl.
 
+$ ---Descripcion de entradaFaultad
 describir(estado(entradaFacultad, _, _, _)) :-
     nl, write('--- LOCACIÓN: Entrada de la Facultad ---'), nl,
     write('El edificio está más lleno de lo normal. Ves al conserje en su caseta.'), nl.
